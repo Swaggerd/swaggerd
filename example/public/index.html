@@ -1,0 +1,61 @@
+<!--
+code: <%=code%>
+</br>
+access_token : <%=access_token%>
+</br>
+id_token : <%=id_token%>
+</br>
+token_type : <%=token_type%>
+</br>
+result : <%=result%>
+-->
+<script src="components/swagger-js/browser/swagger-client.js"></script>
+<script>
+console.log(window.location);
+	// Helper
+	function searchToObject() {
+	  var pairs = window.location.search.substring(1).split("&"),
+	    obj = {},
+	    pair,
+	    i;
+
+	  for ( i in pairs ) {
+	    if ( pairs[i] === "" ) continue;
+
+	    pair = pairs[i].split("=");
+	    obj[ decodeURIComponent( pair[0] ) ] = decodeURIComponent( pair[1] );
+	  }
+
+	  return obj;
+	}
+
+	var onService = function(data) {
+	  console.log("onService", data);
+	};
+
+	var onSwagger = function() {
+		swagger.setHost(window.location.host); // override Swagger's spec for host
+		console.log("swagger loaded");
+
+		swagger.apis.help();
+		swagger.apis.default.findById.help();
+		console.log(swagger.default.findById);
+
+		var authParams = {userId:"joe"};
+		var responseContentType = {responseContentType: 'application/json'};
+		swagger.default.findById(authParams, responseContentType, function(response) {
+				console.log("goodResponse", response);
+				onService(response);
+    	}, function(badResponse){
+    		console.log("badResponse", badResponse);
+    	});
+	};
+
+	// initialize swagger
+	var swagger = new SwaggerClient({
+		url: window.location.href + 'swagger.json',
+		success: onSwagger
+	});
+</script>
+
+<!-- insert "login" tracking pixel here -->

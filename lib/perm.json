@@ -1,0 +1,11 @@
+{
+        "security.js": {
+                "owner": "group a",
+                "user15": "rw"
+        },
+        "main.js": {
+                "owner": "user15",
+                "user15": "rw"
+        }
+}
+

@@ -1,0 +1,10 @@
+#set($inputRoot = $input.json('$'))
+{
+    "query" : "$input.params('$')"
+}
+
+{
+	"pathparam" : "$input.params().path",
+	"query": "$input.params().querystring",
+	"body": $input.json('$')
+}

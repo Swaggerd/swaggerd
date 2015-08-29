@@ -1,0 +1,72 @@
+// Handler: (({{&pathName}}=>{{&methodName}}.js))
+/**
+ * λ {{&summary}}
+ * →λ path {{&method}} {{&path}}
+{{#parameters}}
+{{^isSingleton}} * →λ event.{{#isQueryParameter}}query.{{/isQueryParameter}}{{#isPathParameter}}pathparam.{{/isPathParameter}}{{#isBodyParameter}}body.{{/isBodyParameter}}{{&camelCaseName}} {{=<% %>=}}{<%&type%>}<%={{ }}=%> - {{&description}}{{/isSingleton}}
+{{/parameters}}
+{{#type}}
+ * λ→ response  {{=<% %>=}}{<%&type%>}<%={{ }}=%> - {{&typeDescription}}
+{{/type}}
+{{#responseMessages}}
+ * λ→ response {{=<% %>=}}<%&type%>{<%&responseModel%>}<%={{ }}=%> {{&code}} - {{&message}}
+{{/responseMessages}}
+{{#typeRef.required}}
+ * λ→ required response.{{.}}
+{{/typeRef.required}}
+ */
+exports.{{&pathName}} = function(event, context, reload) {
+  'use strict'
+   var parameters = event;
+    if(parameters === undefined) {
+        parameters = {};
+    }
+
+    var path = '{{&path}}';
+    var domain = '.';
+    var headers = '', form = {};
+
+    event.path = path;
+    event.query = parseParams(event.query, context);
+    event.pathparam = parseParams(event.pathparam, context);
+    event.body = event.body; // no transform needed
+
+    {{#isSecure}}
+    {{/isSecure}}
+
+    {{#parameters}}
+         {{#isFormParameter}}
+            {{#isSingleton}}
+            {{/isSingleton}}
+            {{^isSingleton}}
+            {{/isSingleton}}
+        {{/isFormParameter}}
+
+        {{#required}}
+            {{#isQueryParameter}}
+        if(event.query['{{&camelCaseName}}'] === undefined){
+            context.fail('Missing required {{&in}} parameter: {{&camelCaseName}}');
+            return;
+        }
+            {{/isQueryParameter}}
+
+            {{#isPathParameter}}
+        if(event.pathparam['{{&camelCaseName}}'] === undefined){
+            context.fail('Missing required {{&in}} parameter: {{&camelCaseName}}');
+            return;
+        }
+            {{/isPathParameter}}
+
+            {{#isBodyParameter}}
+        if(event.body['{{&camelCaseName}}'] === undefined){
+            context.fail('Missing required {{&in}} parameter: {{&camelCaseName}}');
+            return;
+        }
+            {{/isBodyParameter}}
+        {{/required}}
+
+    {{/parameters}}
+
+    {{> request}}
+
+ };

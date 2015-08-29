@@ -1,0 +1,120 @@
+#!/usr/bin/env node
+/*eslint quotes: [0, "single"], curly: 0, new-cap:1, eqeqeq:1, no-process-exit:0, no-loop-func:1, no-unreachable:1, camelcase:0, noempty:0, dot-notation:0, no-underscore-dangle:0, eol-last:0*/
+/*eslint-disable no-console */
+/*eslint-env node */
+
+var dotenv = require('dotenv');
+var path = require('path');
+var lambdapi = require(path.join('..', 'lib', 'main.js'));
+var program = require('commander');
+var _       = require("lodash");
+var packageJson;
+try {
+  packageJson = require(path.join(process.cwd(), 'package.json'));
+} catch(e) {
+  console.log("Could not load the project package.json");
+  throw new Error(e);
+}
+
+try {
+  dotenv.load({silent:true});
+} catch(e) {}
+
+var AWS_ENVIRONMENT = process.env.AWS_ENVIRONMENT || '';
+var CONFIG_FILE = process.env.CONFIG_FILE || '';
+var AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID || 'missing';
+var AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY || 'missing';
+var AWS_REGION = process.env.AWS_REGION || 'us-east-1,us-west-2,eu-west-1';
+var AWS_FUNCTION_NAME = process.env.AWS_FUNCTION_NAME || packageJson.name;
+var AWS_HANDLER = process.env.AWS_HANDLER || 'index.handler';
+var AWS_MODE = 'event';
+var AWS_ROLE = process.env.AWS_ROLE_ARN || process.env.AWS_ROLE || 'missing';
+var AWS_MEMORY_SIZE = process.env.AWS_MEMORY_SIZE || 128;
+var AWS_TIMEOUT = process.env.AWS_TIMEOUT || 60;
+var AWS_DESCRIPTION = process.env.AWS_DESCRIPTION || '';
+var AWS_RUNTIME = process.env.AWS_RUNTIME || 'nodejs';
+var AWS_FUNCTION_VERSION = process.env.AWS_FUNCTION_VERSION || '';
+var FUNCTION_PATH = process.env.FUNCTION_PATH || '';
+
+// Future plugin system
+var plugins = ["swagger-crud"]; // hardcoded until config file
+var packages = _.merge(packageJson.dependencies, packageJson.devDependencies);
+_.forEach(packages, function(pv, package) {
+  if(_.includes(plugins, package)) {
+    var p = path.join(process.cwd(),'node_modules', package, 'bin', package);
+    _.forEach(require(p).commands, function(cmd){
+      cmd(program);
+    });
+  }
+});
+
+// Wrapper for node-lambda deploy
+program
+  .command( 'deploy-lambda' )
+  .alias('deploy')
+  .description( 'Deploy your application to Amazon Lambda' )
+  .option( '-e, --environment [' + AWS_ENVIRONMENT + ']', 'Choose environment {development, stating, production}', AWS_ENVIRONMENT )
+  .option( '-a, --accessKey [' + AWS_ACCESS_KEY_ID + ']', 'AWS Access Key', AWS_ACCESS_KEY_ID )
+  .option( '-s, --secretKey [' + AWS_SECRET_ACCESS_KEY + ']', 'AWS Secret Key', AWS_SECRET_ACCESS_KEY )
+  .option( '-r, --region [' + AWS_REGION + ']', 'AWS Region', AWS_REGION )
+  .option( '-c, --mode [' + AWS_MODE + ']', 'Lambda Mode', AWS_MODE )
+  .option( '-o, --role [' + AWS_ROLE + ']', 'Amazon Role ARN', AWS_ROLE )
+  .option( '-m, --memorySize [' + AWS_MEMORY_SIZE + ']', 'Lambda Memory Size', AWS_MEMORY_SIZE )
+  .option( '-t, --timeout [' + AWS_TIMEOUT + ']', 'Lambda Timeout', AWS_TIMEOUT )
+  .option( '-d, --description [' + AWS_DESCRIPTION + ']', 'Lambda Description', AWS_DESCRIPTION )
+  .option( '-u, --runtime [' + AWS_RUNTIME + ']', 'Lambda Runtime', AWS_RUNTIME )
+  .option( '-v, --awsversion [' + AWS_FUNCTION_VERSION + ']', 'Lambda Function Version', AWS_FUNCTION_VERSION )
+  .option( '-P, --noprefix [false]', 'Do not prefix lambda function with package name', false)
+  .action( function( prg ) {
+    lambdapi.deploy( prg );
+    //process.exit(1);
+  } );
+/*
+program
+  .version(lambda.version)
+  .command('run')
+  .description('Run your Amazon Lambda application locally')
+  .option('-h, --handler [' + AWS_HANDLER + ']', 'Lambda Handler {index.handler}', AWS_HANDLER)
+  .action(function (prg) {
+    lambdapi.run(prg);
+  });
+*/
+program
+  .command( 'run' )
+  .alias('server')
+  .description( 'Run your Amazon Lambda application locally' )
+  .option( '-p, --port [8080]', 'Port to use', 8080)
+  .option( '-R, --noreload', 'Disable controller reloading', false)
+  .option( '-e --editor', 'Hosts the Swagger-editor', false)
+  .action( function( prg ) {
+    console.log("Starting local server on port: ", prg.port);
+    lambdapi.run( prg );
+  } );
+
+program
+    .command( 'setup' )
+    .alias( 'use' )
+    .usage('<file>')
+    .description( 'Create a project from Swagger json' )
+    .option( '-P, --no-passthrough [false]', 'NON-WORKING Does not generate Amazon API passthrough files')
+    .option( '-g, --genlocal [false]', 'Generate a seperate in-project local server.')
+    .option( '-c, --clean [false]', 'Overwrite controllers and (with -g) the local server.')
+    .option( '-I, --commentignore [false]', 'Do not overwrite comments in controllers.')
+    .action( function( prg  ) {
+      //prg = program.args[0];
+      //console.log(prg, prg.length, typeof prg); //, options?options.passthrough:''
+      if(!prg || !prg.length) {
+        console.log("Missing Swagger file");
+        //program.outputHelp();
+        process.exit(1);
+      }
+      console.log("Using Swagger file: " + prg);
+      lambdapi.setup( prg, program.args[1] );
+      console.log("Done.");
+    } );
+
+program
+  .version( lambdapi.version )
+  .description('CLI for working with Lambda and Swagger');
+
+program.parse(process.argv);

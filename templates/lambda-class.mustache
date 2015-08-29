@@ -1,0 +1,45 @@
+/*jshint -W069 */
+/**
+ * ===== FILE IS GENERATED - DO NOT CHANGE =====
+ * {{&description}}
+ * @class {{&className}}
+ * @param {(string|object)} [domainOrOptions] - The project domain or options object. If object, see the object's optional properties.
+ * @param {string} [domainOrOptions.domain] - The project domain
+ * @param {object} [domainOrOptions.token] - auth token - object with value property and optional headerOrQueryName and isQuery properties
+ */
+
+ var dpath = require("path");
+
+{{#isSecure}}
+    /**
+     * Set Token
+     * @method
+     * @name {{&className}}#setToken
+     * @param {string} value - token's value
+     * @param {string} headerOrQueryName - the header or query name to send the token at
+     * @param {boolean} isQuery - true if send the token as query param, otherwise, send as header param
+     * ========= TODO ==============
+     */
+{{/isSecure}}
+
+function parseParams(params, context) {
+    'use strict'
+    if(!params) return {};
+    var result = {};
+    try {
+        var q = params;
+        q = q.substring(1).slice(0,-1).split(', ');
+        for(var k in q) {
+            var d = q[k].split('=');
+            result[d[0]] = d[1];
+        }
+    } catch(e) {
+        context.fail("Cannot parse " + params + " because: " + e);
+        return null;
+    }
+    return result;
+}
+
+{{#methods}}
+    {{> method}}
+{{/methods}}

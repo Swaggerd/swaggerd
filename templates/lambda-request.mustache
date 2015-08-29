@@ -1,0 +1,33 @@
+{{#methodAction}}{{&methodName}}.js|||
+/**
+ * λ {{&summary}}
+ * →λ path {{&method}} {{&path}}
+{{#parameters}}
+{{^isSingleton}} * →λ event.{{#isQueryParameter}}query.{{/isQueryParameter}}{{#isPathParameter}}pathparam.{{/isPathParameter}}{{#isBodyParameter}}body.{{/isBodyParameter}}{{&camelCaseName}} {{=<% %>=}}{<%&type%>}<%={{ }}=%> - {{&description}}{{/isSingleton}}
+{{/parameters}}
+{{#type}}
+ * λ→ response  {{=<% %>=}}{<%&type%>}<%={{ }}=%> - {{&typeDescription}}
+{{/type}}
+{{#responseMessages}}
+ * λ→ response {{=<% %>=}}<%&type%>{<%&responseModel%>}<%={{ }}=%> {{&code}} - {{&message}}
+{{/responseMessages}}
+{{#typeRef.required}}
+ * λ→ required response.{{.}}
+{{/typeRef.required}}
+ */
+exports.handler = function(event, context) {
+  var err = null, 
+  	response = {};
+
+  context.done(err, response);
+};
+|||{{&methodName}}.json{{/methodAction}}
+
+var controllerPath = dpath.join(__dirname, "controllers", "{{&methodName}}.js");
+require(controllerPath).handler(event, context);
+
+if(reload) {
+  // Reload route
+  delete require.cache[require.resolve(controllerPath)];
+}
+
