@@ -4,8 +4,8 @@
   "description": "This is an abstraction for Amazon Lambda and Gateway API with Swagger-like api discovery",
   "main": "./lib/main.js",
   "bin": {
-    "lpi": "./bin/swagd",
-    "lambdapi": "./bin/swaggerd"
+    "swagd": "./bin/swagd",
+    "swaggerd": "./bin/swaggerd"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
