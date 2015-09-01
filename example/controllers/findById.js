@@ -8,7 +8,9 @@
  */
 exports.handler = function(event, context) {
   var err = null, 
-  	response = { "userId" : event.pathparam.userId };
+  	response = {};
+
+  	response.name = event.pathparam.userId;
 
   context.done(err, response);
 };
