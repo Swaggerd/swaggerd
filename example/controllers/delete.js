@@ -1,8 +1,8 @@
 /**
  * λ Delete user
  * →λ path DELETE /users/{userId}
- * →λ event.pathparam.userId {string} - User's id
- * λ→ response {} 200 - User deleted
+ * →λ event.pathparam.userId {string} - Users ids
+ * λ→ response {} 200 - User deleted31131
  */
 exports.handler = function(event, context) {
   var err = null, 

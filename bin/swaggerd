@@ -101,13 +101,15 @@ program
     .option( '-c, --clean [false]', 'Overwrite controllers and (with -g) the local server.')
     .option( '-I, --commentignore [false]', 'Do not overwrite comments in controllers.')
     .action( function( prg  ) {
+      prg = prg || 'swagger.json';
       //prg = program.args[0];
       //console.log(prg, prg.length, typeof prg); //, options?options.passthrough:''
-      if(!prg || !prg.length) {
+      
+      /*if(!prg || !prg.length) {
         console.log("Missing Swagger file");
         //program.outputHelp();
         process.exit(1);
-      }
+      }*/
       console.log("Using Swagger file: " + prg);
       lambdapi.setup( prg, program.args[1] );
       console.log("Done.");
