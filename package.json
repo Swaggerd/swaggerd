@@ -40,8 +40,11 @@
     "minimist": "^1.1.1",
     "ncp": "^2.0.0",
     "node-lambda": "git://github.com/jadbox/node-lambda#uploadFlowPatch",
+    "node-zip": "^1.1.1",
     "qs": "^4.0.0",
     "rx": "^3.1.1",
+    "rxjs-aws": "0.0.2",
+    "rxjs-plus": "^0.2.8",
     "serve-static": "^1.10.0",
     "serve-swagger-editor": "^1.0.1",
     "swagger-client": "^2.1.3",
@@ -49,6 +52,7 @@
     "swagger-js-codegen": "VidRoll/swagger-js-codegen#master",
     "swagger-parser": "^2.5.0",
     "swagger-tools": "^0.9.0",
-    "swagger-ui": "^2.1.1"
+    "swagger-ui": "^2.1.1",
+    "wrench": "^1.5.8"
   }
 }
