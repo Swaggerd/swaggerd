@@ -39,12 +39,8 @@
     "lodash": "^3.10.0",
     "minimist": "^1.1.1",
     "ncp": "^2.0.0",
-<<<<<<< HEAD
-    "node-lambda": "git://github.com/jadbox/node-lambda#uploadFlowPatch",
     "node-zip": "^1.1.1",
-=======
     "node-lambda": "jadbox/node-lambda#uploadFlowPatch",
->>>>>>> 185d753a6ef7a5d11a9a2e1b5f73afb5d6ff881b
     "qs": "^4.0.0",
     "rx": "^3.1.1",
     "rxjs-aws": "0.0.2",
