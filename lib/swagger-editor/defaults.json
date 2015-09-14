@@ -16,7 +16,7 @@
   "exampleFiles": [],
   "autocompleteExtension": {},
   "useBackendForStorage": true,
-  "backendThrottle": 200,
+  "backendThrottle": 5000,
   "backendEndpoint": "/editor/spec",
   "backendHealthCheckTimeout": 5000,
   "useYamlBackend": true,
