@@ -94,14 +94,14 @@ program
 program
     .command( 'setup' )
     .alias( 'use' )
-    .usage('<file>')
+    .usage('<file> [swagger.json]')
     .description( 'Create a project from Swagger json' )
     .option( '-P, --no-passthrough [false]', 'NON-WORKING Does not generate Amazon API passthrough files')
     .option( '-g, --genlocal [false]', 'Generate a seperate in-project local server.')
     .option( '-c, --clean [false]', 'Overwrite controllers and (with -g) the local server.')
     .option( '-I, --commentignore [false]', 'Do not overwrite comments in controllers.')
     .action( function( prg  ) {
-      prg = prg || 'swagger.json';
+      prg = typeof prg ==='string' ? prg : 'swagger.json';
       //prg = program.args[0];
       //console.log(prg, prg.length, typeof prg); //, options?options.passthrough:''
       
@@ -111,7 +111,7 @@ program
         process.exit(1);
       }*/
       console.log("Using Swagger file: " + prg);
-      lambdapi.setup( prg, program.args[1] );
+      lambdapi.setup( prg, program.args[1] || program.args[0] );
       console.log("Done.");
     } );
 
