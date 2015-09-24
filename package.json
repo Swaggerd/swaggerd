@@ -1,6 +1,6 @@
 {
   "name": "Swaggerd",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "This is an abstraction for Amazon Lambda and Gateway API with Swagger-like api discovery",
   "main": "./lib/main.js",
   "bin": {
