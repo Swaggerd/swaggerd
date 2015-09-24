@@ -24,9 +24,3 @@ exports.handler = function(event, context) {
 
 var controllerPath = dpath.join(__dirname, "controllers", "{{&methodName}}.js");
 require(controllerPath).handler(event, context);
-
-if(reload) {
-  // Reload route
-  delete require.cache[require.resolve(controllerPath)];
-}
-
