@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1.39",
+    "babel": "^5.8.23",
     "body-parser": "^1.13.2",
     "commander": "jadbox/commander.js",
     "director": "^1.2.8",
