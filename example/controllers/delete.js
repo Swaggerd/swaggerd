@@ -1,7 +1,7 @@
 /**
  * λ Delete user
- * →λ path DELETE /users/{userId}
- * →λ event.pathparam.userId {string} - Users id
+ * →λ path DELETE /users
+ * →λ event.query.userId {string} - Users id
  * λ→ response {} 200 - User deleted
  */
 exports.handler = function(event, context) {

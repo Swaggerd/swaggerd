@@ -6,11 +6,11 @@
 	},
 	"basePath": "/v1",
 	"paths": {
-		"/users/{userId}": {
+		"/users": {
 			"parameters": [
 				{
 					"name": "userId",
-					"in": "path",
+					"in": "query",
 					"description": "Users id",
 					"required": true,
 					"type": "string"

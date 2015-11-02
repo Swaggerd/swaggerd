@@ -20,6 +20,7 @@
     "body-parser": "^1.13.2",
     "connect": "^3.4.0",
     "swagger-client": "^1.2.1",
-    "swagger-crud": "git://github.com/jadbox/swagger-crud"
+    "swagger-crud": "git://github.com/jadbox/swagger-crud",
+    "swagger-ui": "^2.1.3"
   }
 }
