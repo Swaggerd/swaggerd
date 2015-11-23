@@ -86,7 +86,9 @@ program
   .option( '-p, --port [8080]', 'Port to use', 8080)
   .option( '-R, --noreload', 'Disable controller reloading', false)
   .option( '-e --editor', 'Hosts the Swagger-editor', false)
+  .option( '-h --handler', 'Custom handler entry point', false)
   .action( function( prg ) {
+    if(prg.handler) process.env.HANDLER_DIR = prg.handler;
     console.log("Starting local server on port: ", prg.port);
     lambdapi.run( prg );
   } );
@@ -104,7 +106,7 @@ program
       prg = typeof prg ==='string' ? prg : 'swagger.json';
       //prg = program.args[0];
       //console.log(prg, prg.length, typeof prg); //, options?options.passthrough:''
-      
+
       /*if(!prg || !prg.length) {
         console.log("Missing Swagger file");
         //program.outputHelp();
