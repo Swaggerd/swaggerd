@@ -15,12 +15,12 @@
 {{/typeRef.required}}
  */
 exports.handler = function(event, context) {
-  var err = null, 
+  var err = null,
   	response = {};
 
   context.done(err, response);
 };
 |||{{&methodName}}.json{{/methodAction}}
 
-var controllerPath = dpath.join(__dirname, "controllers", "{{&methodName}}.js");
-require(controllerPath).handler(event, context);
+var controller = require(__dirname + "/controllers/{{&methodName}}.js");
+controller.handler(event, context);
