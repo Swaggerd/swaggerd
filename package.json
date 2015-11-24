@@ -31,7 +31,7 @@
   "dependencies": {
     "aws-sdk": "^2.2.17",
     "body-parser": "^1.13.2",
-    "commander": "jadbox/commander.js",
+    "commander": "^2.8.2",
     "compression": "^1.6.0",
     "director": "^1.2.8",
     "dotenv": "^1.2.0",

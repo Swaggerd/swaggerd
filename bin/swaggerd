@@ -84,11 +84,14 @@ program
   .alias('server')
   .description( 'Run your Amazon Lambda application locally' )
   .option( '-p, --port [8080]', 'Port to use', 8080)
-  .option( '-R, --noreload', 'Disable controller reloading', false)
-  .option( '-e --editor', 'Hosts the Swagger-editor', false)
-  .option( '-h --handler', 'Custom handler entry point', false)
+  .option( '-R, --noreload [false]', 'Disable controller reloading', false)
+  .option( '-e --editor [false]', 'Hosts the Swagger-editor', false)
+  .option( '-h --handler [handler.js]', 'Custom handler entry point', 'handler.js')
   .action( function( prg ) {
-    if(prg.handler) process.env.HANDLER_DIR = prg.handler;
+    if(prg.handler) {
+      process.env.HANDLER_PATH = prg.handler;
+      console.log("Using handler: ", process.env.HANDLER_PATH);
+    }
     console.log("Starting local server on port: ", prg.port);
     lambdapi.run( prg );
   } );
@@ -98,10 +101,10 @@ program
     .alias( 'use' )
     .usage('<file> [swagger.json]')
     .description( 'Create a project from Swagger json' )
-    .option( '-P, --no-passthrough [false]', 'NON-WORKING Does not generate Amazon API passthrough files')
-    .option( '-g, --genlocal [false]', 'Generate a seperate in-project local server.')
-    .option( '-c, --clean [false]', 'Overwrite controllers and (with -g) the local server.')
-    .option( '-I, --commentignore [false]', 'Do not overwrite comments in controllers.')
+    .option( '-P, --no-passthrough [false]', 'NON-WORKING Does not generate Amazon API passthrough files', false)
+    .option( '-g, --genlocal [false]', 'Generate a seperate in-project local server.', false)
+    .option( '-c, --clean [false]', 'Overwrite controllers and (with -g) the local server.', false)
+    .option( '-I, --commentignore [false]', 'Do not overwrite comments in controllers.', false)
     .action( function( prg  ) {
       prg = typeof prg ==='string' ? prg : 'swagger.json';
       //prg = program.args[0];
