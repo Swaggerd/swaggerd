@@ -15,8 +15,9 @@
  * λ→ required response.{{.}}
 {{/typeRef.required}}
  */
-exports.{{&pathName}} = function(event, context) {
+module.exports.{{&pathName}} = function(event, context) {
   'use strict'
+  var parseParams = module.exports.parseParams;
    var parameters = event;
     if(parameters === undefined) {
         parameters = {};

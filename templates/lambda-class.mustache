@@ -20,7 +20,7 @@
      */
 {{/isSecure}}
 
-function parseParams(params, context) {
+module.exports.parseParams = function(params, context) {
     'use strict'
     if(!params) return {};
     var result = {};
@@ -37,6 +37,8 @@ function parseParams(params, context) {
     }
     return result;
 }
+
+module.exports = module.exports || {};
 
 {{#methods}}
     {{> method}}
