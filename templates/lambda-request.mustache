@@ -23,4 +23,4 @@ exports.handler = function(event, context) {
 |||{{&methodName}}.json{{/methodAction}}
 
 var controller = require(__dirname + "/controllers/{{&methodName}}.js");
-controller.handler(event, context);
+return controller.handler(event, context);
