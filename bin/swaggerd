@@ -89,7 +89,7 @@ program
   .option( '-h --handler [handler.js]', 'Custom handler entry point', 'handler.js')
   .action( function( prg ) {
     if(prg.handler) {
-      process.env.HANDLER_PATH = prg.handler;
+      //process.env.HANDLER_PATH = prg.handler;
       console.log("Using handler: ", process.env.HANDLER_PATH);
     }
     console.log("Starting local server on port: ", prg.port);
