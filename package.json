@@ -33,7 +33,7 @@
     "wrench": "^1.5.8"
   },
   "dependencies": {
-    "aws-sdk": "^2.3.5",
+    "aws-sdk": "^2.3.6",
     "body-parser": "^1.13.2",
     "commander": "^2.8.2",
     "compression": "^1.6.0",
@@ -50,6 +50,7 @@
     "qs": "^6.1.0",
     "rx": "^4.0.7",
     "rxjs-aws": "*",
+    "rxjs-cluster": "^0.3.15",
     "rxjs-plus": "*",
     "serve-static": "^1.10.0",
     "serve-swagger-editor": "^1.0.1",
