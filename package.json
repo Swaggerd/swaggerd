@@ -50,7 +50,6 @@
     "qs": "^6.1.0",
     "rx": "^4.0.7",
     "rxjs-aws": "*",
-    "rxjs-cluster": "^0.3.15",
     "rxjs-plus": "*",
     "serve-static": "^1.10.0",
     "serve-swagger-editor": "^1.0.1",
