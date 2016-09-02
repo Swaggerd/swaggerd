@@ -1,3 +1,5 @@
+# Swaggerd
+
 Swaggerd is a Node.js framework that allows the developer to focus on the act of writing REST endpoints to solve project requirements. The idea is to automate as much as possible, in a way that is natural to the Node ecosystem and not to constrain the developer as much as possible.
 
 By default, the Swaggerd-cli expects a [swagger.json](https://github.com/Swaggerd/swaggerd/blob/master/example/swagger.json) file in the root of the project. For information on layout, see the Swagger [specification](http://swagger.io/specification/). 
